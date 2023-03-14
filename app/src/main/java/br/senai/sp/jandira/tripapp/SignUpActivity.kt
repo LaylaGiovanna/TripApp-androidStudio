@@ -1,8 +1,6 @@
 package br.senai.sp.jandira.tripapp
 
-import android.content.Context
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,30 +20,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.tripapp.ui.theme.TripAppTheme
 
-class MainActivity : ComponentActivity() {
-
+class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             TripAppTheme {
-                LoginScreen()
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+
+                }
+                SignUpScreen()
             }
         }
     }
 }
 
+
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun LoginScreen(){
+fun SignUpScreen() {
 
-    val context = LocalContext.current
-
-    //Colum principal
+//Colum principal
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+//INICIO da forma roxa
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
@@ -58,42 +60,43 @@ fun LoginScreen(){
                 shape = RoundedCornerShape(0.dp,0.dp,0.dp,30.dp)
             ) {
             }
-        }
+        }//Fim da forma roxa
 
+
+//INICIO do Sign up
         //Header
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 0.dp)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(id = R.string.login),
-                fontSize = 64.sp,
+                text = stringResource(id = R.string.sign_up),
+                fontSize = 32.sp,
                 fontWeight = FontWeight(800),
                 lineHeight = 90.sp,
                 color = Color(207, 6, 240)
 
             )
             Text(
-                text = stringResource(id = R.string.please),
-                fontSize = 19.sp,
+                text = stringResource(id = R.string.create),
+                fontSize = 15.sp,
                 fontWeight = FontWeight(400),
                 lineHeight = 90.sp,
                 color = Color(160, 156, 156)
 
             )
 
-        }
+        }//FIM do Sign up
 
+
+//INICIO dos Text Fields
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center
         ) {
-
-
-            //Main
+            //TextField EMAIL
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -115,10 +118,69 @@ fun LoginScreen(){
                         )
                     }
                 )
-            }
+            }//TextField EMAIL
+
             Spacer(
                 modifier = Modifier.height(16.dp)
             )
+
+            //TextField PHONE
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = {},
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                    label = {
+                        Text(text = stringResource(id = R.string.phone))
+                    },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.smartphone_24),
+                            contentDescription = stringResource(id = R.string.phone),
+                            tint = Color(207,1,240)
+
+                        )
+                    }
+                )
+            }//TextField PHONE
+
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+
+            //TextField EMAIL
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = {},
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                    label = {
+                        Text(text = stringResource(id = R.string.email))
+                    },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.email_24),
+                            contentDescription = stringResource(id = R.string.email),
+                            tint = Color(207,1,240)
+
+                        )
+                    }
+                )
+            }//TextField EMAIL
+
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+
+            //TextField PASSWORD
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -140,10 +202,23 @@ fun LoginScreen(){
                         )
                     }
                 )
-            }
+            }//TextField PASSWORD
+            //FIM dos Text Fields
+
+
             Spacer(
-                modifier = Modifier.height(30.dp)
+                modifier = Modifier.height(15.dp)
             )
+
+            //INICIO do over 18
+            Row(modifier = Modifier
+                .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(checked = false, onCheckedChange = {})
+                Text(text = stringResource(id = R.string.over_18))
+            }//FIM do over 18
+
+            //ROW
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
@@ -151,39 +226,34 @@ fun LoginScreen(){
                 Button(
                     onClick = { /*TODO*/ },
                     colors = ButtonDefaults.buttonColors(Color(207, 6, 240)),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxWidth()
 
                 ) {
                     Text(
-                        text = stringResource(id = R.string.sign_in),
+                        text = stringResource(id = R.string.create_account),
                         fontSize = 16.sp,
                         fontWeight =  FontWeight.Bold,
                         color = Color.White
 
                     )
-                    Icon(
-                        painter = painterResource(id = R.drawable.arrow_forward_24),
-                        contentDescription ="",
-                        tint = Color.White
-                    )
                 }
             }
+        }//FIM dos Text Fields
 
 
-
-        }
-
+//INICIO da Row de Don't have an account
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalArrangement = Arrangement.End
         ) {
-            Text(text = stringResource(id = R.string.dont_have))
+            Text(text = stringResource(id = R.string.already_have))
+
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = stringResource(id = R.string.sign_up),
-                modifier = Modifier.clickable {
-                    val intent = Intent(context, SignUpActivity::class.java)
-                    context.startActivity(intent)
-                },
+
+            Text(text = stringResource(id = R.string.sign_in),
                 color = Color(207, 6, 240),
                 fontWeight = FontWeight.Bold)
         }
@@ -200,8 +270,9 @@ fun LoginScreen(){
             ) {
 
             }
-        }
+        }//Final da Row de Don't have an account
+
+
     }
+
 }
-
-

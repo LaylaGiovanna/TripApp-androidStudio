@@ -2,16 +2,20 @@
         <string name="app_name">TripApp</string>
         <string name="title_activity_main">MainActivity</string>
         <string name="login">Login</string>
-        <string name="text_login">Please, sign in to continue</string>
+        <string name="please">Please, sign in to continue</string>
         <string name="email">E-mail</string>
         <string name="password">Password</string>
         <string name="sign_in">Sign in</string>
-        <string name="text_sign">Do not have an account? Sign up!</string>
+        <!-- \ - não usar o apóstrofo como função e sim como caracter comum-->
+        <string name="dont_have">Don\'t have an account? Sign up!</string>
+        <string name="sign_up">Sign up</string>
+
 
         <string name="create">Create a new account</string>
         <string name="username">Username</string>
         <string name="phone">Phone</string>
         <string name="over_18">Over 18?</string>
         <string name="create_account">CREATE ACCOUNT</string>
-        <string name="already_have">Already have an account? Sign in</string>
+        <string name="already_have">Already have an account?</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
 </resources>

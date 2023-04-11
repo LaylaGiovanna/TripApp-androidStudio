@@ -7,7 +7,7 @@
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <!-- \ - não usar o apóstrofo como função e sim como caracter comum-->
-    <string name="dont_have">Don\'t have an account? Sign up!</string>
+    <string name="dont_have">Don\'t have an account?</string>
     <string name="sign_up">Sign up</string>
 
 
@@ -19,4 +19,5 @@
     <string name="already_have">Already have an account?</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_my_trips">MyTripsActivity</string>
+    <string name="title_activity_logged">LoggedActivity</string>
 </resources>

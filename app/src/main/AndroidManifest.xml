@@ -12,17 +12,22 @@
         android:theme="@style/Theme.TripApp"
         tools:targetApi="31">
         <activity
-            android:name=".MyTripsActivity"
+            android:name=".LoggedActivity"
+            android:exported="false"
+            android:label="@string/title_activity_logged"
+            android:theme="@style/Theme.TripApp" />
+        <activity
+            android:name=".gui.MyTripsActivity"
             android:exported="false"
             android:label="@string/title_activity_my_trips"
             android:theme="@style/Theme.TripApp" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".gui.SignUpActivity"
             android:exported="false"
             android:label="@string/title_activity_sign_up"
             android:theme="@style/Theme.TripApp" />
         <activity
-            android:name=".MainActivity"
+            android:name=".gui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TripApp">

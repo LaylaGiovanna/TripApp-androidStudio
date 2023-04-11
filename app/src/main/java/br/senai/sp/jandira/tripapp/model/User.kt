@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity (tableName = "tbl_user")
 data class User(
     //chave primaria que pode ser usada em banco de forma semantic
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
@@ -12,5 +12,6 @@ data class User(
     var email: String = "",
     var password: String = "",
     var phone: String = "",
-    @ColumnInfo(name = "is_over_18") var isOver18: Boolean = false
+    @ColumnInfo(name = "is_over_18") var isOver18: Boolean = false,
+    val username: String
 )

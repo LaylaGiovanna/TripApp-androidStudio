@@ -9,7 +9,7 @@ import br.senai.sp.jandira.tripapp.model.User
 //Representa nosso banco de dados
 
 //quando estiver com ENTITIES o ROOM sabe que é para criar o banco
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class], version = 3)
 abstract class TripDb : RoomDatabase() {
     abstract fun userDao(): UserDao
     companion object {
@@ -25,7 +25,7 @@ abstract class TripDb : RoomDatabase() {
                         context,
                         TripDb::class.java,
                         "db_trip"
-                    ).allowMainThreadQueries().build()
+                    ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
             }
             return instanceDb
         }

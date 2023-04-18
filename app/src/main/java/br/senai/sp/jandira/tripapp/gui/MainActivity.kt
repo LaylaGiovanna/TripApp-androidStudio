@@ -246,7 +246,10 @@ fun authenticate(
 
     if (user != null){
         Toast.makeText(context, "User alredy exists", Toast.LENGTH_LONG).show()
-        val intent = Intent(context, LoggedActivity::class.java)
+        val intent = Intent(context, MyTripsActivity::class.java)
+
+        intent.putExtra("id", user.id)
+        intent.putExtra("name", user.userName)
         context.startActivity(intent)
     }else{
         Toast.makeText(context, "Not exists", Toast.LENGTH_LONG).show()

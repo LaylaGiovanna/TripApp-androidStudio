@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -18,6 +20,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,6 +36,8 @@ import br.senai.sp.jandira.tripapp.components.TopShape
 import br.senai.sp.jandira.tripapp.model.User
 import br.senai.sp.jandira.tripapp.repository.UserRepository
 import br.senai.sp.jandira.tripapp.ui.theme.TripAppTheme
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +76,20 @@ fun SignUpScreen() {
     var photoUri by remember {
         mutableStateOf<Uri?>(null)
     }
+
+    var launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        photoUri = uri
+    }
+
+// o painter vai guardar a imagem, requisitamos a imagem a partir do context atual,
+// os dados (data) vai trazer a uri da imagem e o build irá construir de fato
+    var painter = rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalContext.current)
+            .data(photoUri)
+            .build()
+    )
 
     var userNameState by remember {
         mutableStateOf("")
@@ -131,13 +150,16 @@ fun SignUpScreen() {
                         shape = CircleShape,
                         backgroundColor = Color(
                             160,
-                            160,
-                            160
+                            156,
+                            156,
+                            1
                         )
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.person_24),
-                            contentDescription = ""
+                            painter = if (photoUri == null) painterResource(id = R.drawable.person_24)
+                            else painter,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
                         )
                     }
                     Image(
@@ -145,10 +167,18 @@ fun SignUpScreen() {
                         contentDescription = "",
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
+                            .clickable {
+                                launcher.launch("image/*")
+                                var message = "nada"
+                                Log.i(
+                                    "ds2m",
+                                    "${photoUri?.path ?: message}"
+                                )
+                            }
                     )
                 }
                 Spacer(modifier = Modifier.height(32.dp))
-                //COMEÇO
+                //COMEÇO ////////////////////////////////////////////////////////////////////
 
                 Column() {
 
@@ -273,12 +303,13 @@ fun SignUpScreen() {
                             Button(
                                 onClick = {
                                     saveUser(
-                                        userName = userNameState,
-                                        phone = phoneState,
-                                        email = emailState,
-                                        password = passwordState,
-                                        isOver18 = over18State,
-                                        context = context
+                                        userNameState,
+                                        phoneState,
+                                        emailState,
+                                        passwordState,
+                                        over18State,
+                                        photoUri?.path ?: "",
+                                        context
                                     )
                                 },
                                 modifier = Modifier
@@ -303,7 +334,7 @@ fun SignUpScreen() {
                     }
 
                 }
-                //TERMINO
+                //TERMINO ///////////////////////////////////////////////////////
 
 
             }
@@ -352,15 +383,17 @@ fun saveUser(
     email: String,
     password: String,
     isOver18: Boolean,
+    profilePhotoUri: String,
     context: Context
 ) {
     //criando um objeto USER
     val newUser = User(
         id = 0,
-        username = userName,
+        userName = userName,
         phone = phone,
         email = email,
         password = password,
+        profilePhoto= profilePhotoUri!!,
         isOver18 = isOver18
     )
     //criando uma instância do repositorio
